@@ -1,0 +1,50 @@
+#通过程序实现随堂作业中的第二、三题，并且完善程序，能够自由增加操作数量
+from pythonds.basic import Stack
+from pythonds.basic import Queue
+problemqueue=Queue()
+problemstack=Stack()
+onenum=1
+zeronum=0
+m=0
+mylist=[0]*8
+mylist[0]=1
+
+def initialize(problemlist):
+    global problemqueue
+    for element in problemlist:
+        problemqueue.enqueue(element)
+
+def func(i,q,problemlist):#i+1控制深度；q代表元素的个数
+    global onenum
+    global zeronum
+    global m
+    if i == q:
+        mylist[i-1]=0
+        if m%2 == 0:
+            #print(mylist)
+            print(int(m/2+1),end=' ')
+            for j in mylist:
+                if j==0:
+                    print(problemstack.pop(),end='')
+                if j==1:
+                    problemstack.push(problemqueue.dequeue())
+            print("")
+            initialize(problemlist)
+        m+=1
+        return
+    elif onenum>=zeronum and onenum<5 and zeronum<5:
+        mylist[i]=1
+        onenum+=1# 1的个数
+        func(i+1,q,problemlist)
+        onenum-=1 #递归恢复
+        mylist[i]=0 #赋值为0
+        zeronum+=1 #0的个数
+        func(i+1,q,problemlist)
+        zeronum-=1
+
+problemlist=["A","B","C","D"]
+initialize(problemlist)
+func(1,8,problemlist)
+#print(m/2)
+
+
